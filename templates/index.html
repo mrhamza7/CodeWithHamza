@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html class="no-js ss-preload" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Muhammad Hamza - AI and Web Development Expert">
+    <title>Mr.Hamza</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon_io/favicon.ico') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #0d061f;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            margin: 0;
+            position: relative;
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: transparent;
+        }
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 43, 226, 0.2), transparent);
+            z-index: -1;
+            animation: glowPulse 8s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+        .navbar {
+            transition: all 0.3s ease;
+            background: rgba(20, 10, 40, 0.85);
+            backdrop-filter: blur(12px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            padding: 1rem 0;
+            display: block;
+            box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
+        }
+        .navbar.scrolled {
+            background: rgba(20, 10, 40, 0.95);
+        }
+        .nav-link {
+            font-family: 'Lora', serif;
+            position: relative;
+            display: inline-block;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+            color: #d4b1ff;
+            font-weight: 600;
+        }
+        .nav-link:hover {
+            color: #ff4da6;
+        }
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: #ff4da6;
+            transition: width 0.4s ease;
+        }
+        .nav-link:hover::before {
+            width: 100%;
+        }
+        .dropdown-menu {
+            transition: all 0.3s ease;
+            transform: translateY(-10px);
+            opacity: 0;
+            pointer-events: none;
+            background: rgba(30, 20, 60, 0.9);
+            border-radius: 5px;
+            padding: 5px 0;
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
+        }
+        .dropdown:hover .dropdown-menu {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .dropdown-menu a {
+            color: #d4b1ff;
+            font-family: 'Open Sans', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .dropdown-menu a:hover {
+            background: #ff4da6;
+            color: #0d061f;
+        }
+        .folio-list__item, .timeline__block {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: rgba(30, 20, 60, 0.5);
+            border-radius: 10px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            overflow: hidden;
+        }
+        .folio-list__item:hover, .timeline__block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(147, 51, 234, 0.5);
+            border-color: #ff4da6;
+        }
+        .folio-list__item {
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .folio-list__proj-link {
+            transition: all 0.3s ease;
+            color: #d4b1ff;
+            font-family: 'Lora', serif;
+        }
+        .folio-list__proj-link:hover {
+            color: #ff4da6;
+            transform: translateY(-2px);
+        }
+        .hamburger div {
+            transition: all 0.3s ease;
+            background: #d4b1ff;
+        }
+        .hamburger.active .line1 {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active .line2 {
+            opacity: 0;
+        }
+        .hamburger.active .line3 {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d061f;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #loader {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #d4b1ff;
+            border-top: 4px solid #ff4da6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .section {
+            padding: 60px 20px;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            background: rgba(30, 20, 60, 0.5);
+            box-shadow: 0 5px 20px rgba(147, 51, 234, 0.2);
+        }
+        .folio-list__item-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+        }
+        .folio-list__item-pic img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 5px 5px 0 0;
+        }
+        .modal-popup {
+            max-width: 600px;
+            margin: 20px auto;
+            background: rgba(30, 20, 60, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            color: #e0e0e0;
+            box-shadow: 0 5px 20px rgba(147, 51, 234, 0.3);
+        }
+        .modal-popup img {
+            width: 100%;
+            border-radius: 5px;
+        }
+        .modal-popup__desc h5 {
+            font-family: 'Lora', serif;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #9333ea;
+            font-weight: 700;
+        }
+        .modal-popup__desc p {
+            margin-bottom: 15px;
+        }
+        .modal-popup__cat {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 10px;
+        }
+        .modal-popup__cat li {
+            background: rgba(147, 51, 234, 0.2);
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #ff4da6;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .modal-popup__details {
+            display: inline-block;
+            color: #ff4da6;
+            text-decoration: underline;
+            font-family: 'Lora', serif;
+        }
+        .timeline__block {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-left: 3px solid #9333ea;
+            background: rgba(147, 51, 234, 0.05);
+            border-radius: 10px;
+        }
+        .timeline__bullet {
+            width: 12px;
+            height: 12px;
+            background: #ff4da6;
+            border-radius: 50%;
+            position: absolute;
+            left: -6px;
+            top: 20px;
+            box-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+        }
+        .timeline__header h4 {
+            font-family: 'Lora', serif;
+            font-size: 1.25rem;
+            color: #9333ea;
+            font-weight: 700;
+        }
+        .timeline__header h5 {
+            font-family: 'Lora', serif;
+            font-size: 1rem;
+            color: #ff4da6;
+        }
+        .timeline__header p {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+        }
+        .timeline__desc {
+            margin-top: 10px;
+            color: #c0c0c0;
+        }
+        .skills-list li {
+            background: rgba(147, 51, 234, 0.1);
+            color: #e0e0e0;
+            padding: 8px 16px;
+            border-radius: 5px;
+            margin: 5px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            font-family: 'Open Sans', sans-serif;
+        }
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #9333ea, #ff4da6);
+            color: #0d061f;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
+        }
+        .download-btn:hover {
+            background: linear-gradient(90deg, #ff4da6, #9333ea);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.5);
+        }
+        .contact-btn {
+            background: linear-gradient(90deg, #9333ea, #ff4da6);
+            color: #0d061f;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-family: 'Lora', serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(147, 51, 234, 0.3);
+        }
+        .contact-btn:hover {
+            background: linear-gradient(90deg, #ff4da6, #9333ea);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(147, 51, 234, 0.5);
+        }
+        .profile-pic {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid #9333ea;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
+            transition: all 0.3s ease;
+        }
+        .social-footer a, .contact-social a {
+            font-size: 1.5rem;
+            margin: 0 10px;
+            color: #d4b1ff;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        .social-footer a:hover, .contact-social a:hover {
+            color: #ff4da6;
+            transform: translateY(-3px) rotateX(20deg) rotateY(20deg);
+            text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+        }
+        .social-footer a i, .contact-social a i {
+            margin-right: 5px;
+        }
+        /* Intro Section Styles */
+        #intro {
+            position: relative;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+        }
+        .intro-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            padding: 15px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.95);
+        }
+        .intro-pretitle {
+            font-family: 'Lora', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #9333ea;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: inline-block;
+            position: relative;
+        }
+        .intro-pretitle::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #9333ea, #ff4da6);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .intro-pretitle:hover::after {
+            transform: scaleX(1);
+        }
+        .intro-title {
+            font-family: 'Lora', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #e0e0e0;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            position: relative;
+        }
+        @media (min-width: 768px) {
+            .intro-title {
+                font-size: 3.5rem;
+            }
+        }
+        .intro-title::after {
+            content: '|';
+            display: inline-block;
+            color: #ff4da6;
+            animation: blink 0.7s infinite;
+            margin-left: 5px;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        .intro-scrolldown svg {
+            width: 40px;
+            height: 40px;
+            fill: #ff4da6;
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 5px rgba(147, 51, 234, 0.5));
+        }
+        .intro-scrolldown:hover svg {
+            transform: translateY(10px);
+            fill: #9333ea;
+        }
+        .contact-form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(147, 51, 234, 0.3);
+        }
+    </style>
+</head>
+<body id="top">
+    <!-- Animated Background -->
+    <div id="particles-js"></div>
+    <div class="glow-overlay"></div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div id="loader"></div>
+    </div>
+
+    <!-- Page Wrap -->
+    <div class="s-pagewrap">
+        <!-- Navbar -->
+        <nav class="navbar fixed top-0 left-0 w-full z-50 py-4">
+            <div class="container mx-auto px-4 flex justify-between items-center">
+                <a href="{{ url_for('index') }}" class="text-2xl font-bold text-e0e0e0 transition-all duration-300 hover:text-[#ff4da6]" style="font-family: 'Lora', serif;">Hamza's Portfolio</a>
+                <div class="hamburger md:hidden flex flex-col gap-1.5 cursor-pointer">
+                    <div class="line1 w-6 h-0.5 transition-all duration-300"></div>
+                    <div class="line2 w-6 h-0.5 transition-all duration-300"></div>
+                    <div class="line3 w-6 h-0.5 transition-all duration-300"></div>
+                </div>
+                <ul class="nav-links hidden md:flex space-x-8">
+                    <li><a href="#intro" class="nav-link text-lg">Intro</a></li>
+                    <li><a href="#about" class="nav-link text-lg">About</a></li>
+                    <li class="relative dropdown">
+                        <a href="#works" class="nav-link text-lg flex items-center">Projects <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></a>
+                        <ul class="dropdown-menu absolute text-e0e0e0 rounded-lg shadow-lg mt-2 w-48">
+                            <li><a href="{{ url_for('spam_classifier') }}" class="block px-4 py-2 rounded-lg">Email Spam Classifier</a></li>
+                            <li><a href="#modal-02" class="block px-4 py-2 rounded-lg">Animals Classification</a></li>
+                            <li><a href="#modal-03" class="block px-4 py-2 rounded-lg">Bones Fracture</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact" class="nav-link text-lg">Contact</a></li>
+                </ul>
+            </div>
+            <ul class="mobile-nav-links hidden flex-col items-center bg-[#2d2d2d] w-full py-4 md:hidden">
+                <li><a href="#intro" class="nav-link text-lg py-2">Intro</a></li>
+                <li><a href="#about" class="nav-link text-lg py-2">About</a></li>
+                <li class="relative dropdown">
+                    <a href="#works" class="nav-link text-lg py-2 flex justify-center items-center">Projects <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></a>
+                    <ul class="dropdown-menu text-e0e0e0 rounded-lg shadow-lg mt-2 w-48">
+                        <li><a href="{{ url_for('spam_classifier') }}" class="block px-4 py-2 rounded-lg">Email Spam Classifier</a></li>
+                        <li><a href="#modal-02" class="block px-4 py-2 rounded-lg">Animals Classification</a></li>
+                        <li><a href="#modal-03" class="block px-4 py-2 rounded-lg">Bones Fracture</a></li>
+                    </ul>
+                </li>
+                <li><a href="#contact" class="nav-link text-lg py-2">Contact</a></li>
+            </ul>
+        </nav>
+
+        <!-- Intro Section -->
+        <section id="intro" class="section">
+            <div class="intro-content container mx-auto px-4">
+                <div class="intro-pretitle">Hello World</div>
+                <h1 class="intro-title" data-text="I am Hamza, Aspiring a Software Developer & Machine Learning Engineer."></h1>
+                <a href="#about" class="intro-scrolldown smoothscroll flex justify-center mt-4">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M11 21.883l-6.235-7.527-.765.644 7.521 9 7.479-9-.764-.645-6.236 7.529v-21.884h-1v21.883z"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="container mx-auto px-4">
+                <div class="row about-info wide grid grid-cols-1 lg:grid-cols-2 gap-8" data-animate-block>
+                    <div class="column about-info__pic-block flex justify-center lg:justify-start">
+                        <img src="{{ url_for('send_image', filename='profilepic.jpg') }}" alt="Profile Picture" class="profile-pic" data-animate-el>
+                    </div>
+                    <div class="column">
+                        <div class="about-info__text">
+                            <h2 class="text-3xl font-semibold mb-4 text-purple-400" style="font-family: 'Lora', serif;" data-animate-el>About</h2>
+                            <p class="text-lg mb-4 attention-getter text-c0c0c0" data-animate-el>
+                                I am a dynamic and results-driven IT graduate with a proven track record of academic excellence,
+                                holding the first position in my cohort. I possess intermediate skills in web development,
+                                application development, and IT project management, with a strong foundation in AI,
+                                Machine Learning (ML), and Deep Learning (DL) concepts.
+                                I am known for my strong communication abilities, effective teamwork, and ability to perform well under pressure.
+                            </p>
+                            <a href="https://drive.google.com/uc?export=download&id=13CzrVZIoDYWGVYI4F5X7Fl5rdXHHX7y4" class="download-btn" data-animate-el>Download CV</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row about-expertise mt-8" data-animate-block>
+                    <div class="column lg-12">
+                        <h2 class="text-3xl font-semibold mb-6 text-purple-400" style="font-family: 'Lora', serif;" data-animate-el>Expertise</h2>
+                        <ul class="skills-list flex flex-wrap gap-4 justify-center" data-animate-el>
+                            <li>Web Development</li>
+                            <li>Android App Development</li>
+                            <li>AI/ML Enthusiast</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row about-timelines mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8" data-animate-block>
+                    <div class="column">
+                        <h2 class="text-3xl font-semibold mb-6 text-purple-400" style="font-family: 'Lora', serif;" data-animate-el>Education</h2>
+                        <div class="timeline" data-animate-el>
+                            <div class="timeline__block">
+                                <div class="timeline__bullet"></div>
+                                <div class="timeline__header">
+                                    <h4>University of Sahiwal, Sahiwal</h4>
+                                    <h5>Bachelor in Information Technology</h5>
+                                    <p class="text-a0a0a0">Aug-2020 to Jul-2024</p>
+                                </div>
+                                <div class="timeline__desc">
+                                    <ul class="list-disc pl-5">
+                                        <li>1st Position Holder in my cohort.</li>
+                                        <li>3.62/4.0 CGPA.</li>
+                                    </ul>
+                                </div>
+                                <a href="https://drive.google.com/uc?export=download&id=124y2Z2AfDoMCv-KqMzH5alIW6Y7CH2Ee" class="download-btn mt-2" data-animate-el>Download Degree</a>
+                            </div>
+                            <div class="timeline__block">
+                                <div class="timeline__bullet"></div>
+                                <div class="timeline__header">
+                                    <h4>Govt. Higher Secondary School, Kassowal</h4>
+                                    <h5>F.Sc (Pre-Engineering)</h5>
+                                    <p class="text-a0a0a0">Feb-2017 to Sep-2019</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <h2 class="text-3xl font-semibold mb-6 text-purple-400" style="font-family: 'Lora', serif;" data-animate-el>Certifications</h2>
+                        <div class="timeline" data-animate-el>
+                            <div class="timeline__block">
+                                <div class="timeline__bullet"></div>
+                                <div class="timeline__header">
+                                    <h4>Azure AI Fundamentals</h4>
+                                    <p class="text-a0a0a0">Date Issued: December 11, 2024</p>
+                                </div>
+                                <div class="timeline__desc">
+                                    <p>Just leveled up my AI skills with the Microsoft Certified Azure AI Fundamentals certification! It was a great learning experience diving into the world of cloud-based AI. Excited to see what the future holds.</p>
+                                </div>
+                                <a href="https://drive.google.com/uc?export=download&id=13HdgwTBx7UyhShIZv8XGzVX2HP40wLsi" class="download-btn mt-2" data-animate-el>Download Certificate</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Works Section -->
+        <section id="works" class="section">
+            <div class="container mx-auto px-4">
+                <div class="column lg-12" data-animate-block>
+                    <h2 class="text-4xl font-bold mb-6 text-purple-400" style="font-family: 'Lora', serif;" data-animate-el>Recent Projects</h2>
+                    <p class="text-2xl mb-8 text-c0c0c0" data-animate-el>Here are some of my favorite projects I have done lately. Feel free to check them out.</p>
+                    <ul class="folio-list row grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+                        <li class="folio-list__item column" data-animate-el>
+                            <a class="folio-list__item-link" href="#modal-01">
+                                <div class="folio-list__item-pic">
+                                    <img src="{{ url_for('send_image', filename='spamDetection.png') }}" alt="Email Spam Classifier">
+                                </div>
+                                <div class="folio-list__item-text text-center mt-3 p-4">
+                                    <div class="folio-list__item-title text-lg font-semibold mt-1">Email Spam Detection</div>
+                                </div>
+                            </a>
+                            <a href="{{ url_for('spam_classifier') }}" class="folio-list__proj-link hover:underline flex justify-center mt-2 mb-4 text-sm font-medium">Try It Now</a>
+                        </li>
+                        <li class="folio-list__item column" data-animate-el>
+                            <a class="folio-list__item-link" href="#modal-02">
+                                <div class="folio-list__item-pic">
+                                    <img src="{{ url_for('send_image', filename='animals.jpeg') }}" alt="Animals Classification">
+                                </div>
+                                <div class="folio-list__item-text text-center mt-3 p-4">
+                                    <div class="folio-list__item-title text-lg font-semibold mt-1">Animals Classification</div>
+                                </div>
+                            </a>
+                            <a href="{{ url_for('animals_classification') }}" class="folio-list__proj-link hover:underline flex justify-center mt-2 mb-4 text-sm font-medium">Try It Now</a>
+                        </li>
+                        <li class="folio-list__item column" data-animate-el>
+                            <a class="folio-list__item-link" href="#modal-03">
+                                <div class="folio-list__item-pic">
+                                    <img src="{{ url_for('send_image', filename='bones.jpeg') }}" alt="Bones Fracture">
+                                </div>
+                                <div class="folio-list__item-text text-center mt-3 p-4">
+                                    <div class="folio-list__item-title text-lg font-semibold mt-1">Bones Fracture</div>
+                                </div>
+                            </a>
+                            <a href="{{ url_for('bones_fracture') }}" class="folio-list__proj-link hover:underline flex justify-center mt-2 mb-4 text-sm font-medium">Try It Now</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Modal Templates Popup -->
+                <div id="modal-01" hidden>
+                    <div class="modal-popup">
+                        <img src="{{ url_for('send_image', filename='spamDetection.png') }}" alt="Email Spam Classifier">
+                        <div class="modal-popup__desc">
+                            <h5>Email Spam Classifier</h5>
+                            <p>A web-based AI tool that classifies emails as spam or not using machine learning. Built with Flask, Tailwind CSS, and a Naive Bayes model.</p>
+                            <ul class="modal-popup__cat">
+                                <li>AI</li>
+                                <li>Web Development</li>
+                            </ul>
+                        </div>
+                        <a href="{{ url_for('spam_classifier') }}" class="modal-popup__details">Try It Now</a>
+                    </div>
+                </div>
+                <div id="modal-02" hidden>
+                    <div class="modal-popup">
+                        <img src="{{ url_for('send_image', filename='animalsClassification.png') }}" alt="Animals Classification">
+                        <div class="modal-popup__desc">
+                            <h5>Animals Classification</h5>
+                            <p>A CNN-based project to classify animals from images. Built using deep learning frameworks like TensorFlow and Keras.</p>
+                            <ul class="modal-popup__cat">
+                                <li>Deep Learning</li>
+                                <li>Computer Vision</li>
+                            </ul>
+                        </div>
+                        <a href="{{ url_for('animals_classification') }}" class="modal-popup__details">Try It Now</a>
+                    </div>
+                </div>
+                <div id="modal-03" hidden>
+                    <div class="modal-popup">
+                        <img src="{{ url_for('send_image', filename='bonesFracture.png') }}" alt="Bones Fracture">
+                        <div class="modal-popup__desc">
+                            <h5>Bones Fracture Detection</h5>
+                            <p>A CNN-based project to detect fractures in bones from X-ray images. Built using deep learning frameworks like TensorFlow and Keras.</p>
+                            <ul class="modal-popup__cat">
+                                <li>Deep Learning</li>
+                                <li>Medical Imaging</li>
+                            </ul>
+                        </div>
+                        <a href="{{ url_for('bones_fracture') }}" class="modal-popup__details">Try It Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container mx-auto px-4">
+                <div class="row contact-top">
+                    <div class="column lg-12">
+                        <h2 class="text-4xl font-bold mb-6 text-purple-400" style="font-family: 'Lora', serif;">Get In Touch</h2>
+                        <p class="text-2xl mb-8 text-c0c0c0">I love to hear from you. Whether you have a question or just want to chat about design, tech & art — shoot me a message.</p>
+                    </div>
+                </div>
+                <div class="row contact-bottom grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="column lg-3 contact-block">
+                        <h3 class="text-xl font-semibold mb-4 text-purple-400" style="font-family: 'Lora', serif;">Reach me at</h3>
+                        <p class="contact-links">
+                            <a href="mailto:hamzamr635@gmail.com" class="text-[#ff4da6] hover:text-[#9333ea]">hamzamr635@gmail.com</a><br>
+                            <a href="tel:+923071880106" class="text-[#ff4da6] hover:text-[#9333ea]">+923071880106</a>
+                        </p>
+                    </div>
+                    <div class="column lg-4 contact-block">
+                        <h3 class="text-xl font-semibold mb-4 text-purple-400" style="font-family: 'Lora', serif;">Social</h3>
+                        <ul class="contact-social flex gap-4">
+                            <li><a href="https://www.linkedin.com/in/mrhamza07/" class="text-[#ff4da6] hover:text-[#9333ea]"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                            <li><a href="https://github.com/mrhamza7" class="text-[#ff4da6] hover:text-[#9333ea]"><i class="fab fa-github"></i> GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="column lg-4 contact-block">
+                        <a href="mailto:hamzamr635@gmail.com" class="contact-btn w-full text-center">Reach Out Me</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="s-footer py-8 bg-[#2d2d2d] text-center">
+            <div class="container mx-auto px-4">
+                <div class="row">
+                    <div class="column ss-copyright mb-4">
+                        <p style="font-family: 'Lora', serif; color: #d4b1ff;">© 2025 Muhammad Hamza. All rights reserved. | Designed with passion in Pakistan.</p>
+                        <!-- <p style="font-family: 'Open Sans', sans-serif; color: #a0a0a0; font-size: 0.9rem;">Last updated: 01:40 AM PKT, Thursday, May 15, 2025.</p> -->
+                    </div>
+                    <div class="social-footer flex justify-center gap-6">
+                        <a href="https://www.linkedin.com/in/mrhamza07/" class="text-[#ff4da6] hover:text-[#9333ea]"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://github.com/mrhamza7" class="text-[#ff4da6] hover:text-[#9333ea]"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Preloader
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.display = 'none';
+        });
+
+        // Particles.js Background
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 120, density: { enable: true, value_area: 800 } },
+                color: { value: ['#9333ea', '#ff4da6', '#00ff00'] },
+                shape: { type: 'circle' },
+                opacity: { value: 0.7, random: true },
+                size: { value: 4, random: true },
+                line_linked: { enable: true, distance: 120, color: '#ff4da6', opacity: 0.3, width: 1.5 },
+                move: { enable: true, speed: 3, direction: 'none', random: true, straight: false, out_mode: 'out', bounce: false }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' }, resize: true },
+                modes: { grab: { distance: 200, line_linked: { opacity: 0.5 } }, push: { particles_nb: 4 } }
+            },
+            retina_detect: true
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const mobileNav = document.querySelector('.mobile-nav-links');
+        if (hamburger && mobileNav) {
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                mobileNav.classList.toggle('hidden');
+            });
+        }
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Navbar Link Hover Animation
+        gsap.utils.toArray('.nav-link').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, { duration: 0.4, color: '#ff4da6', ease: 'power2.out' });
+            });
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, { duration: 0.4, color: '#d4b1ff', ease: 'power2.out' });
+            });
+        });
+
+        // Dropdown Animation
+        const dropdowns = gsap.utils.toArray('.dropdown');
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', () => {
+                gsap.to(dropdown.querySelector('.dropdown-menu'), {
+                    duration: 0.5,
+                    y: 0,
+                    opacity: 1,
+                    ease: 'power2.out'
+                });
+            });
+            dropdown.addEventListener('mouseleave', () => {
+                gsap.to(dropdown.querySelector('.dropdown-menu'), {
+                    duration: 0.3,
+                    y: -10,
+                    opacity: 0,
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // Hamburger Hover Animation
+        if (hamburger) {
+            hamburger.addEventListener('mouseenter', () => {
+                gsap.to(hamburger.querySelectorAll('div'), {
+                    duration: 0.3,
+                    backgroundColor: '#ff4da6',
+                    ease: 'power2.out'
+                });
+            });
+            hamburger.addEventListener('mouseleave', () => {
+                gsap.to(hamburger.querySelectorAll('div'), {
+                    duration: 0.3,
+                    backgroundColor: '#d4b1ff',
+                    ease: 'power2.out'
+                });
+            });
+        }
+
+        // Profile Picture 3D Tilt Animation
+        const profilePics = document.querySelectorAll('.profile-pic');
+        profilePics.forEach(pic => {
+            pic.addEventListener('mousemove', (e) => {
+                const rect = pic.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                gsap.to(pic, {
+                    duration: 0.3,
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    ease: 'power2.out',
+                    transformPerspective: 1000
+                });
+            });
+            pic.addEventListener('mouseleave', () => {
+                gsap.to(pic, { duration: 0.3, rotationX: 0, rotationY: 0, ease: 'power2.out' });
+            });
+        });
+
+        // 3D Animation for Sections
+        gsap.utils.toArray('.section').forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: section, start: 'top 80%' }
+            });
+        });
+
+        // 3D Animation for Timeline Blocks
+        gsap.utils.toArray('.timeline__block').forEach(block => {
+            gsap.from(block, {
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: 'power3.out',
+                scrollTrigger: { trigger: block, start: 'top 85%' }
+            });
+        });
+
+        // 3D Animation for Download Buttons
+        gsap.utils.toArray('.download-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                gsap.to(btn, {
+                    duration: 0.3,
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    ease: 'power2.out',
+                    transformPerspective: 1000
+                });
+            });
+            btn.addEventListener('mouseleave', () => {
+                gsap.to(btn, { duration: 0.3, rotationX: 0, rotationY: 0, ease: 'power2.out' });
+            });
+        });
+
+        // 3D Animation for Contact Button
+        const contactBtn = document.querySelector('.contact-btn');
+        if (contactBtn) {
+            contactBtn.addEventListener('mousemove', (e) => {
+                const rect = contactBtn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                gsap.to(contactBtn, {
+                    duration: 0.3,
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    ease: 'power2.out',
+                    transformPerspective: 1000
+                });
+            });
+            contactBtn.addEventListener('mouseleave', () => {
+                gsap.to(contactBtn, { duration: 0.3, rotationX: 0, rotationY: 0, ease: 'power2.out' });
+            });
+        }
+
+        // 3D Animation for Social Icons
+        const socialLinks = document.querySelectorAll('.social-footer a, .contact-social a');
+        socialLinks.forEach(link => {
+            link.addEventListener('mousemove', (e) => {
+                const rect = link.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                gsap.to(link, {
+                    duration: 0.3,
+                    rotationX: rotateX,
+                    rotationY: rotateY,
+                    ease: 'power2.out',
+                    transformPerspective: 1000
+                });
+            });
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, { duration: 0.3, rotationX: 0, rotationY: 0, ease: 'power2.out' });
+            });
+        });
+
+        // Typewriter and Fade-In Animation for Intro
+        document.addEventListener('DOMContentLoaded', () => {
+            const introContent = document.querySelector('.intro-content');
+            const introTitle = document.querySelector('.intro-title');
+            const fullText = introTitle.getAttribute('data-text');
+
+            // Fade-in and scale animation for intro content
+            gsap.to(introContent, {
+                opacity: 1,
+                scale: 1,
+                duration: 1.5,
+                ease: 'power3.out',
+                delay: 0.5
+            });
+
+            // Typewriter animation
+            let currentText = '';
+            let index = 0;
+
+            function type() {
+                if (index < fullText.length) {
+                    currentText += fullText[index];
+                    introTitle.textContent = currentText;
+                    index++;
+                    setTimeout(type, 50);
+                }
+            }
+
+            // Start typing after a slight delay
+            setTimeout(type, 1000);
+        });
+
+        // General Page Animations
+        gsap.from('.navbar', { y: 0, opacity: 0, duration: 1.2, ease: 'power3.out' });
+
+        // Works Card Animation
+        gsap.utils.toArray('.folio-list__item').forEach(card => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 30,
+                scale: 0.95,
+                duration: 0.8,
+                ease: 'elastic.out(1, 0.5)',
+                scrollTrigger: { trigger: card, start: 'top 85%' }
+            });
+        });
+
+        // Modal Popup
+        document.querySelectorAll('.folio-list__item-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const modalId = link.getAttribute('href');
+                const modal = document.querySelector(modalId);
+                if (modal) {
+                    modal.hidden = false;
+                    modal.style.display = 'block';
+                    gsap.from(modal, { opacity: 0, scale: 0.9, duration: 0.5, ease: 'power3.out' });
+                }
+            });
+        });
+        document.querySelectorAll('.modal-popup').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    gsap.to(modal, { opacity: 0, scale: 0.9, duration: 0.5, ease: 'power3.out', onComplete: () => {
+                        modal.style.display = 'none';
+                        modal.hidden = true;
+                    }});
+                }
+            });
+        });
+    </script>
+</body>
+</html>
